@@ -6,4 +6,5 @@ import org.springframework.stereotype.Service
 
 @Service()
 interface ToolRepository : JpaRepository<ToolEntity, Long> {
+    fun findByTagsContainingIgnoreCase(tag: String): List<ToolEntity>
 }

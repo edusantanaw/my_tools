@@ -22,4 +22,13 @@ class ToolGateway(
         repository.save(entity)
         return entity.toDomain();
     }
+
+    fun loadAll(tag: String?): List<Tool> {
+        if(tag == null) {
+            val tools = repository.findAll()
+            return tools.map { e -> e.toDomain() };
+        }
+        val tools = repository.findByTagsContainingIgnoreCase(tag);
+        return tools.map { e -> e.toDomain() };
+    }
 }
