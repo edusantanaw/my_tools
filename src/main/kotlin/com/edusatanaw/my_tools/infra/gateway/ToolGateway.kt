@@ -6,6 +6,7 @@ import com.edusatanaw.my_tools.infra.entities.ToolEntity
 import com.edusatanaw.my_tools.infra.repositories.ToolRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import java.util.Optional
 
 @Service
 class ToolGateway(
@@ -30,5 +31,22 @@ class ToolGateway(
         }
         val tools = repository.findByTagsContainingIgnoreCase(tag);
         return tools.map { e -> e.toDomain() };
+    }
+
+    fun loadById(id: Long): Tool? {
+        val tool = repository.findById(id)
+        if(tool.isEmpty) return  null
+        return tool.get().toDomain()
+    }
+
+    fun update(data: Tool) {
+        val entity = ToolEntity(
+            id = data.id,
+            link = data.link,
+            tags = data.tags.joinToString(","),
+            title = data.title,
+            description = data.description
+        )
+        repository.save(entity)
     }
 }
