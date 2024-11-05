@@ -25,7 +25,7 @@ class ToolGateway(
     }
 
     fun loadAll(tag: String?): List<Tool> {
-        if(tag == null) {
+        if (tag == null) {
             val tools = repository.findAll()
             return tools.map { e -> e.toDomain() };
         }
@@ -35,7 +35,7 @@ class ToolGateway(
 
     fun loadById(id: Long): Tool? {
         val tool = repository.findById(id)
-        if(tool.isEmpty) return  null
+        if (tool.isEmpty) return null
         return tool.get().toDomain()
     }
 
@@ -49,4 +49,5 @@ class ToolGateway(
         )
         repository.save(entity)
     }
+
 }

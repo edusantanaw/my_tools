@@ -5,6 +5,7 @@ import com.edusatanaw.my_tools.controllers.dto.LoadTool
 import com.edusatanaw.my_tools.entities.Tool
 import com.edusatanaw.my_tools.services.CreateToolService
 import com.edusatanaw.my_tools.services.LoadAllToolService
+import com.edusatanaw.my_tools.services.LoadByIdService
 import com.edusatanaw.my_tools.services.UpdateToolService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -28,6 +29,8 @@ class ToolController {
 
     @Autowired
     private final lateinit var updateToolService: UpdateToolService
+    @Autowired
+    private final lateinit var loadByIdService: LoadByIdService
 
     @PostMapping("/api/tool")
     fun create(@RequestBody() data: CreateToolDTO): ResponseEntity<Tool> {
@@ -45,5 +48,11 @@ class ToolController {
     fun update(@PathVariable("id") id: Long, @RequestBody() data: CreateToolDTO): ResponseEntity<Tool> {
         val tool = updateToolService.update(id, data)
         return ResponseEntity.status(HttpStatus.OK).body(tool);
+    }
+
+    @GetMapping("/api/tool/{id}")
+    fun loadById(@PathVariable id: Long): ResponseEntity<Tool> {
+        val tool = loadByIdService.loadById(id);
+        return ResponseEntity.status(200).body(tool)
     }
 }
